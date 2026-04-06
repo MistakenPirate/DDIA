@@ -12,6 +12,8 @@ The lines are blurring. Redis is a datastore but people use it as a message queu
 
 Three things matter: **Reliability, Scalability, Maintainability**.
 
+![alt text](meta/1.1.png)
+
 ---
 
 ## Reliability
@@ -59,7 +61,16 @@ This one's great. Back in 2012:
 - Reading home timelines: 300k/sec
 - The killer? **Fan-out.**
 
-**Approach 1** - query at read time. Simple JOIN, but doing that 300k times per second? Brutal.
+![alt text](meta/1.2,3.png)
+
+**Approach 1** - query at read time. Brutal at 300k/sec.
+```sql
+SELECT tweets.*, users.*
+FROM tweets
+  JOIN users ON tweets.sender_id = users.id
+  JOIN follows ON follows.followee_id = users.id
+WHERE follows.follower_id = current_user
+```
 
 **Approach 2** - pre-compute every user's timeline. When someone tweets, shove it into all their followers' caches. Cool, until someone with 30 million followers tweets. That's 30 million writes. From one tweet.
 
@@ -81,6 +92,8 @@ Averages lie. One super-fast request and one super-slow one average out to "fine
 - 100ms slower = 1% less sales. That's real money.
 - **Tail latency amplification** is nasty. If one user request hits five backend services, you only need ONE slow service to ruin the whole experience.
 
+![alt text](meta/1.4.png)
+
 ### Coping with load
 
 - **Scale up** = bigger machine. **Scale out** = more machines. Usually you need a mix.
@@ -88,6 +101,8 @@ Averages lie. One super-fast request and one super-slow one average out to "fine
 - Distributing stateless stuff is easy. **Stateful data is where it gets painful.**
 - There's no universal scaling architecture. It depends entirely on YOUR load pattern.
 - If you're early stage: **ship fast**. Don't engineer for traffic you don't have yet.
+
+![alt text](image.png)
 
 ---
 
