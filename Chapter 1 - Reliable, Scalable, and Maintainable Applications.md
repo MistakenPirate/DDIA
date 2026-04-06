@@ -102,7 +102,7 @@ Averages lie. One super-fast request and one super-slow one average out to "fine
 - There's no universal scaling architecture. It depends entirely on YOUR load pattern.
 - If you're early stage: **ship fast**. Don't engineer for traffic you don't have yet.
 
-![alt text](image.png)
+![alt text](meta/1.5.png)
 
 ---
 
