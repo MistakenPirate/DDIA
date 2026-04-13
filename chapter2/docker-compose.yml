@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: ddia_ch2_postgres
+    environment:
+      POSTGRES_USER: ddia
+      POSTGRES_PASSWORD: ddia
+      POSTGRES_DB: chapter2
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ddia"]
+      interval: 2s
+      timeout: 5s
+      retries: 5
