@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import ChapterLayout from '../../layouts/ChapterLayout.astro';
+
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters');
+  const sorted = chapters.sort((a, b) => a.data.chapter - b.data.chapter);
+
+  return sorted.map((chapter, i) => ({
+    params: { slug: chapter.id.replace(/\.md$/, '') },
+    props: {
+      chapter,
+      prevChapter: sorted[i - 1] || null,
+      nextChapter: sorted[i + 1] || null,
+    },
+  }));
+}
+
+const { chapter, prevChapter, nextChapter } = Astro.props;
+const { Content } = await chapter.render();
+---
+
+<ChapterLayout
+  title={chapter.data.title}
+  chapter={chapter.data.chapter}
+  description={chapter.data.description}
+  prevChapter={prevChapter}
+  nextChapter={nextChapter}
+>
+  <Content />
+</ChapterLayout>

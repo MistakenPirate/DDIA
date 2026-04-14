@@ -1,0 +1,22 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-serif: "Georgia", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --color-book-bg: #faf9f6;
+  --color-book-bg-dark: #1a1a1a;
+  --color-book-text: #2d2d2d;
+  --color-book-text-dark: #d4d4d4;
+  --color-book-muted: #6b6b6b;
+  --color-book-muted-dark: #999999;
+  --color-book-border: #e8e4df;
+  --color-book-border-dark: #333333;
+  --color-book-accent: #8b4513;
+  --color-book-accent-dark: #d4a574;
+  --color-book-surface: #f5f0eb;
+  --color-book-surface-dark: #242424;
+  --color-book-code-bg: #f0ece6;
+  --color-book-code-bg-dark: #2a2a2a;
+}

@@ -1,0 +1,72 @@
+---
+import '../styles/global.css';
+
+const { title, chapter, description, prevChapter, nextChapter } = Astro.props;
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ch {chapter} - {title} | DDIA Notes</title>
+  <meta name="description" content={description} />
+</head>
+<body class="bg-book-bg dark:bg-book-bg-dark text-book-text dark:text-book-text-dark font-serif">
+
+  <!-- Minimal top nav -->
+  <header class="py-5 px-6">
+    <div class="max-w-[720px] mx-auto flex justify-between items-baseline">
+      <a href="/" class="font-sans text-sm text-book-muted dark:text-book-muted-dark hover:text-book-accent dark:hover:text-book-accent-dark transition-colors tracking-wide uppercase">
+        DDIA Notes
+      </a>
+      <span class="font-sans text-xs text-book-muted dark:text-book-muted-dark tracking-widest uppercase">
+        Chapter {chapter}
+      </span>
+    </div>
+  </header>
+
+  <hr class="border-book-border dark:border-book-border-dark max-w-[720px] mx-auto" />
+
+  <!-- Chapter content -->
+  <article class="max-w-[720px] mx-auto px-6 py-12 prose dark:prose-invert
+    prose-headings:font-serif
+    prose-h1:text-4xl prose-h1:font-normal prose-h1:tracking-tight prose-h1:mb-8 prose-h1:border-none
+    prose-h2:text-2xl prose-h2:font-normal prose-h2:mt-14 prose-h2:mb-4 prose-h2:border-none prose-h2:tracking-tight
+    prose-h3:text-lg prose-h3:font-semibold prose-h3:mt-8 prose-h3:mb-3
+    prose-p:text-base prose-p:leading-[1.85] prose-p:text-book-text dark:prose-p:text-book-text-dark
+    prose-a:text-book-accent dark:prose-a:text-book-accent-dark prose-a:underline prose-a:underline-offset-2 prose-a:decoration-book-accent/30
+    prose-code:font-mono prose-code:bg-book-code-bg dark:prose-code:bg-book-code-bg-dark prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-[0.85em] prose-code:before:content-none prose-code:after:content-none
+    prose-pre:bg-book-surface dark:prose-pre:bg-book-surface-dark prose-pre:border prose-pre:border-book-border dark:prose-pre:border-book-border-dark prose-pre:rounded-lg prose-pre:text-sm
+    prose-blockquote:border-l-2 prose-blockquote:border-book-accent dark:prose-blockquote:border-book-accent-dark prose-blockquote:pl-6 prose-blockquote:italic prose-blockquote:text-book-muted dark:prose-blockquote:text-book-muted-dark
+    prose-img:max-w-full prose-img:h-auto prose-img:rounded-lg prose-img:my-8
+    prose-hr:border-book-border dark:prose-hr:border-book-border-dark prose-hr:my-10
+    prose-strong:font-semibold prose-strong:text-book-text dark:prose-strong:text-book-text-dark
+    prose-li:leading-[1.85]
+    prose-ul:my-4 prose-ol:my-4
+  ">
+    <slot />
+  </article>
+
+  <!-- Prev / Next -->
+  <hr class="border-book-border dark:border-book-border-dark max-w-[720px] mx-auto" />
+  <nav class="max-w-[720px] mx-auto px-6 py-8 flex justify-between items-center font-sans text-sm">
+    <div>
+      {prevChapter && (
+        <a href={`/chapters/${prevChapter.id.replace(/\.md$/, '')}`}
+           class="text-book-accent dark:text-book-accent-dark hover:underline">
+          &larr; Ch {prevChapter.data.chapter}: {prevChapter.data.title}
+        </a>
+      )}
+    </div>
+    <div>
+      {nextChapter && (
+        <a href={`/chapters/${nextChapter.id.replace(/\.md$/, '')}`}
+           class="text-book-accent dark:text-book-accent-dark hover:underline">
+          Ch {nextChapter.data.chapter}: {nextChapter.data.title} &rarr;
+        </a>
+      )}
+    </div>
+  </nav>
+
+</body>
+</html>

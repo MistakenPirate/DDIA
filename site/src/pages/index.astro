@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+const chapters = await getCollection('chapters');
+const sorted = chapters.sort((a, b) => a.data.chapter - b.data.chapter);
+---
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DDIA Notes</title>
+</head>
+<body class="bg-book-bg dark:bg-book-bg-dark text-book-text dark:text-book-text-dark">
+
+  <div class="max-w-xl mx-auto px-6 py-20">
+
+    <!-- Title -->
+    <div class="text-center mb-16">
+      <h1 class="font-serif text-4xl font-normal tracking-tight mb-3">DDIA Notes</h1>
+      <div class="w-12 h-px bg-book-accent dark:bg-book-accent-dark mx-auto mb-4"></div>
+      <p class="text-book-muted dark:text-book-muted-dark text-sm font-sans">
+        Designing Data-Intensive Applications
+      </p>
+      <p class="text-book-muted dark:text-book-muted-dark text-xs font-sans mt-1">
+        Martin Kleppmann
+      </p>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="mb-16">
+      <h2 class="font-sans text-xs tracking-widest uppercase text-book-muted dark:text-book-muted-dark mb-6">
+        Table of Contents
+      </h2>
+
+      <div class="space-y-0">
+        {sorted.map((ch) => (
+          <a href={`/chapters/${ch.id.replace(/\.md$/, '')}`}
+             class="group flex items-baseline gap-4 py-3 border-b border-book-border/50 dark:border-book-border-dark/50 hover:border-book-accent dark:hover:border-book-accent-dark transition-colors">
+            <span class="font-sans text-sm text-book-muted dark:text-book-muted-dark w-6 shrink-0">
+              {ch.data.chapter}.
+            </span>
+            <span class="font-serif text-lg group-hover:text-book-accent dark:group-hover:text-book-accent-dark transition-colors">
+              {ch.data.title}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Footer note -->
+    <p class="text-center text-book-muted dark:text-book-muted-dark text-xs font-sans leading-relaxed">
+      Notes I'm making while I read DDIA by Martin Kleppmann (da Goat)
+      <br />Goal for now: read & internalize till ch-7
+    </p>
+
+  </div>
+
+</body>
+</html>
